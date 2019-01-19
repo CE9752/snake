@@ -35,6 +35,7 @@ void close(){
 int main(){
 	srand(time(0));
 	float j=0;
+	int x_pos=300;
     if(!init()){
         cout<<"failed to initialize!";
     }
@@ -46,46 +47,68 @@ int main(){
     	while(!quit){
     		SDL_SetRenderDrawColor(r,0,0,0,255);
  			SDL_RenderClear(r);
-    		// if(count==0){
-    		// 	for(int i=0;i<=rand()%12;i++){
-    		// 		boxes[rand()%12][].show=true;
-    		// 	}
-    		// 	count++;
-    		// }
-    		// for(int i=0;i<12;i++){
-    		// 	if(boxes[i].show==true){
-    		// 		if(j<=650){
-    		// 			boxes[i].set_position(i,j);
-    		// 			boxes[i].block();
-    		// 		}
-    		// 	}
-    		// }
-    		for(int j=0;j<14;j++){
- 				if(count==0){
- 					for(int i=0;i<=rand()%12;i++){
- 						boxes[rand()%12][j].show=true;
- 					}
- 					count++;
- 				}
+    	// 	for(int j=0;j<14;j++){
+ 				// if(count==0){
+ 				// 	for(int i=0;i<=rand()%12;i++){
+ 				// 		boxes[rand()%12][0].show=true;
+ 				// 	}
+ 				// 	count++;
+ 				// }
+ 				// for(int i=0;i<12;i++){
+ 				// 	if(boxes[i][0].show==true){
+ 				// 		boxes[i][0].set_position(i,j);
+ 				// 		boxes[i][0].block();
+ 				// 		boxes[i][0].set_position(i,j-1);
+ 				// 		boxes[i][0].hide();
+
+ 				// 	}
+ 				// }
+ 			for(int j=13;j>0;j--){
  				for(int i=0;i<12;i++){
- 					if(boxes[i][j].show==true){
+ 					if(boxes[i][j-1].show==true){
+ 						boxes[i][j].show=true;
+ 						boxes[i][j-1].show=false;
+
  						boxes[i][j].set_position(i,j);
  						boxes[i][j].block();
- 						boxes[i][j+1].show=true;
- 						//boxes[i][j].show=false;
+ 						boxes[i][j-1].set_position(i,j-1);
+ 						boxes[i][j-1].hide();
+ 						
  					}
  				}
  			}
-
-    		while(SDL_PollEvent(&e) !=0){
+ 			if(count==3){
+ 				for(int i=0;i<12;i++){
+ 					boxes[i][0].show=rand()%2;
+ 				}
+ 				count = -1;
+ 			}
+ 			count++;
+ 			while(SDL_PollEvent(&e) !=0){
                 if(e.type == SDL_QUIT ){
                     quit = true;
                 }
-            }
-            SDL_RenderPresent(r);
-           // j=j+0.1;
+                else if(e.type == SDL_KEYDOWN){
+                	switch(e.key.keysym.sym){
+                		case SDLK_d:
+                		if(x_pos<590)
+                			x_pos+=5;
+                			break;
+                		case SDLK_a:
+                		if(x_pos>10)
+                			x_pos-=5;
+                			break;
+                	}
+                	filledCircleRGBA(r,x_pos,500,10,0,0,100,255);
+                	circleRGBA(r,x_pos,500,10,0,0,100,255);
+                	SDL_RenderPresent(r);
+            	    }
+            	}//while
+            	SDL_Delay(500);
+            	SDL_RenderPresent(r);
+ 			}
+ 			
     	}
-    }
     close();
 	return 0;
 }
