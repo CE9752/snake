@@ -10,6 +10,7 @@ class Box{
 		int y_pos;	
 		int jon;
 		bool show = false;
+		bool isball = false;
 		void set_jon(int Jon){
 			jon = Jon;
 		}
@@ -23,6 +24,7 @@ class Box{
 			jon--;
 		}
 		void block(){
+			//SDL_SetRenderDrawColor(r,100,0,0,255);
 		 	boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,0,250,0,255);
 		}
 		void hide(){
