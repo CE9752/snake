@@ -13,15 +13,15 @@ class Ball{
 		void set_num(){
 
 		}
-		void move_right(){
-			x_pos=x_pos+3;
+		void move_right(int x[10],int i){
+			x[i]=x[i]+3;
 		}
-		void move_left(){
-			x_pos=x_pos-3;
+		void move_left(int x[10],int i){
+			x[i]=x[i]-3;
 		}
-		void set_ball(){
-			filledCircleRGBA(r,x_pos,y_pos,10,0,0,100,255);
-            circleRGBA(r,x_pos,y_pos,10,0,0,100,255);
+		void set_ball(int x[10],int i){
+			filledCircleRGBA(r,x[i],500+i*20,10,0,0,100,255);
+            circleRGBA(r,x[i],500+i*20,10,0,0,100,255);
 		}
 		void hide_ball(){
 

@@ -63,7 +63,12 @@ int main(){
     	Box boxes[12][14];
     	constantball redball;
     	Ball ball[10];
+    	int x[10];
+    	for(int i=0;i<10;i++){
+    		x[i]=300;
+    	}
     	int count=0;
+    	int counter=0;
     	SDL_Event e;
     	bool quit = false;
 /*
@@ -72,70 +77,93 @@ int main(){
 		SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
 		SDL_Rect dstrect = { 0, 0, texW, texH };
 */		ball[0].set_pos(0,300);
+    	for(int i=1;i<10;i++){
+ 				ball[i].set_pos(i,300);
+ 			}
     	while(!quit){
     		SDL_SetRenderDrawColor(r,0,0,0,255);
  			SDL_RenderClear(r);
  			for(int j=13;j>0;j--){
- 				for(int i=0;i<12;i++){
- 					if(boxes[i][j-1].show==true){
- 						boxes[i][j].show=true;
- 						boxes[i][j-1].show=false;
- 						boxes[i][j].set_position(i,j);
- 						boxes[i][j].block();
- 						boxes[i][j-1].set_position(i,j-1);
- 						boxes[i][j-1].hide();
- 						
- 					}
- 					if(boxes[i][j-1].isball==true){
- 						boxes[i][j].isball=true;
- 						boxes[i][j-1].isball=false;
- 						redball.show_ball(i,j);
- 					}
- 				}//for i
+ 				while(counter<1000){
+ 					for(int i=0;i<12;i++){
+ 						if(boxes[i][j-1].show==true){
+ 							boxes[i][j].show=true;
+ 							boxes[i][j-1].show=false;
+ 							for(float a=0;a<=50;a+=0.01){
+ 								boxes[i][j].set_position(i,j,a);
+ 								boxes[i][j].block();
+ 								boxes[i][j-1].set_position(i,j-1,a);
+ 								boxes[i][j-1].hide();
+ 							}
+ 							
+ 						}
+ 						if(boxes[i][j-1].isball==true){
+ 							boxes[i][j].isball=true;
+ 							boxes[i][j-1].isball=false;
+ 							redball.show_ball(i,j);
+ 						}
+ 					}//for i
+
+ 					counter++;
+ 				}//while
+ 				if(counter==1000){
+ 					counter=0;
+ 				}
  			}// for j
- 			if(count==3){
- 				for(int i=0;i<12;i++){
- 					random=rand()%5;
- 					if(random==1 || random==0){
- 						boxes[i][0].show=random;
+
+ 				if(count==6){
+ 					for(int i=0;i<12;i++){
+ 						random=rand()%5;
+ 						if(random==1 || random==0){
+ 							boxes[i][0].show=random;
+ 						}
+ 						else if(random==2){
+ 							boxes[i][0].isball=true;
+ 						}
+ 						else{
+ 							boxes[i][0].show=random%2;
+ 						}
  					}
- 					else if(random==2){
- 						boxes[i][0].isball=true;
- 					}
- 					else{
- 						boxes[i][0].show=random%2;
- 					}
+ 					count = -1;
  				}
- 				count = -1;
- 			}
- 			if(count == 1){
- 				for(int i=0;i<12;i++){
- 					random=rand()%7;
- 					if(random==0 || random==1){
- 						boxes[i][0].isball=random;
- 					}
+ 				if(count == 3){
+ 					for(int i=0;i<12;i++){
+ 						random=rand()%7;
+ 						if(random==0 || random==1){
+ 							boxes[i][0].isball=random;
+ 						}
  					
+ 					}
  				}
- 			}
- 			count++;
+ 				count++;
+ 			for(int i=0;i<10;i++){
+                				ball[i].set_ball(x,i);
+                				}
  			while(SDL_PollEvent(&e) !=0){
                 if(e.type == SDL_QUIT ){
                     quit = true;
                 }
                 else if(e.type == SDL_KEYDOWN){
+                	
                 	switch(e.key.keysym.sym){
                 		case SDLK_d:
-                			ball[0].move_right();                			
+                			for(int i=0;i<10;i++){
+                				ball[i].set_ball(x,i);
+                				ball[i].move_right(x,i);
+                			}
                 			break;
-                		case SDLK_a:
-                			ball[0].move_left();
-                			break;
-                	}//switch
-            	    }
-            	}//while sdl pollevent
+               			case SDLK_a:
+               				for(int i=0;i<10;i++){
+                				ball[i].set_ball(x,i);
+                				ball[i].move_left(x,i);
+                			}
+               				break;
+               		}//switch
+                	
+            	}
+            }//while sdl pollevent
             	
- 				ball[0].set_ball();
-     	      	SDL_Delay(250);
+     	      	SDL_Delay(100);
             	//SDL_RenderCopy(r, texture, NULL, &dstrect);
             	SDL_RenderPresent(r);
  			}//while(!quit)

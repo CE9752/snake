@@ -14,9 +14,9 @@ class Box{
 		void set_jon(int Jon){
 			jon = Jon;
 		}
-		void set_position(int i_x, int j_y){
+		void set_position(int i_x, int j_y,float a){
 			x_pos = tol*i_x;
-			y_pos = arz*j_y;
+			y_pos = (arz*(j_y-1))+a;
 		}
 
 		void is_touched()
