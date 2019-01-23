@@ -18,13 +18,11 @@ class Box{
 			x_pos = tol*i_x;
 			y_pos = (arz*(j_y-1))+a;
 		}
-
 		void is_touched()
 		{
 			jon--;
 		}
 		void block(){
-			//SDL_SetRenderDrawColor(r,100,0,0,255);
 		 	boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,0,250,0,255);
 		}
 		void hide(){
