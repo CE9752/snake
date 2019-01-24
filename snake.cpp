@@ -21,6 +21,8 @@ const int SCREEN_WIDTH=600;
 const int SCREEN_HEIGHT=700;
 Text t;
 Text rb;
+Text bb;
+Text score;
 bool init(){
 	bool success = true;
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
@@ -86,6 +88,7 @@ int main(){
 	srand(time(0));
 	int random=0;
 	int moving=0;
+    int firstsetball=0;
     if(!init()){
         cout<<"failed to initialize!";
     }
@@ -97,13 +100,16 @@ int main(){
     		Box boxes[12][14];
     		constantball redball;
     		Ball ball[10];
-    		float x[10];
+    		int x[10];
     		for(int i=0;i<10;i++){
     			x[i]=300;
     		}
     		int count=0;
+            int counter=0;
     		int num[14][12];
             int num1[14][12];
+            int number=4;
+            int s=0;
     		SDL_Event e;
     		bool quit = false;
 			/*ball[0].set_pos(0,300);
@@ -125,10 +131,17 @@ int main(){
  								boxes[i][j-1].hide();
  							}//for a
  							num[i][j]=num[i][j-1];								
- 							if(x[0]-10>boxes[i][j].x_pos && x[0]+10<boxes[i][j].x_pos+48 && 500>boxes[i][j].y_pos+50 && boxes[i][j].y_pos+50>470){
+ 							if(x[0]-10>boxes[i][j].x_pos && x[0]+10<boxes[i][j].x_pos+48 && 500>boxes[i][j].y_pos+50 && boxes[i][j].y_pos+50>480){
  								ball[0].touch_block();
  								num[i][j]--;
+                                number--;
  							}
+                            if(50<num[i][j]){
+                                num[i][j]=rand()%50+1;
+                            }
+                            if(num[i][j]<1){
+                                boxes[i][j].show=false;
+                            }
  							t.render(boxes[i][j].x_pos+20,boxes[i][j].y_pos+10,num,i,j);
  						}
  						if(boxes[i][j-1].isball==true){
@@ -136,6 +149,13 @@ int main(){
  							boxes[i][j].isball=true;
  							boxes[i][j-1].isball=false;
  							redball.show_ball(i,j);
+                            if(x[0]-10>i*50+25-20 && x[0]+10<i*50+25+20 && 500>j*50+25 && j*50+25>470){
+                                boxes[i][j].isball=false;
+                                number+=num1[i][j];
+                            }
+                            if(num1[i][j]<1 or 50<num1[i][j]){
+                                num1[i][j]=rand()%5+1;
+                            }
                             rb.render(boxes[i][j].x_pos+20,boxes[i][j].y_pos,num1,i,j);
  						}
  					}//for i
@@ -163,13 +183,16 @@ int main(){
  							if(random==0 || random==1){
  								boxes[i][0].isball=random;
  							}
- 						
  						}
  					}
  					count++;
- 				for(int i=0;i<10;i++){
+ 				for(int i=0;i<number+1;i++){
             	    ball[i].set_ball(x,i);
             	}
+                bb.render1(x[0]-10,470,number);
+                if(number<0){
+                	
+                }
  				while(SDL_PollEvent(&e) !=0){
                 	if(e.type == SDL_QUIT ){
                 	    quit = true;
@@ -177,25 +200,32 @@ int main(){
                 	else if(e.type == SDL_KEYDOWN){
                 		switch(e.key.keysym.sym){
                 			case SDLK_RIGHT:
-                				for(int i=0;i<10;i++){
-                					for(int counter=2*i+1;counter>=0;counter--){
-                						ball[i].set_ball(x,i);
-                						ball[i].move_right(x,i);
-                					}                				
+                				for(int i=0;i<number+1,i<10;i++){
+                                    if(counter==(3*i)){
+                                        ball[i].move_right(x,i);
+                		  		      ball[i].set_ball(x,i);
+                				    } 			
                 				}
                 				break;
                				case SDLK_LEFT:
-               					for(int i=0;i<10;i++){
-               						for(int counter=2*i+1;counter>=0;counter--){
-                						ball[i].set_ball(x,i);
-                						ball[i].move_left(x,i);
-                					}
-                				}
+                                for(int i=0;i<number+1,i<10;i++){
+                                    if(counter==(3*i)){
+                                        ball[i].move_left(x,i);
+                                        ball[i].set_ball(x,i);
+                                        
+                                    }                        
+                                }
                					break;
                			}//switch
             		}
+                    if(counter==27){
+                        counter=-1;
+                    } 
+                    counter++;
             	}//while sdl pollevent
-     	      		SDL_Delay(200);
+            	s++;
+                    score.render1(560,10, s);
+     	      		SDL_Delay(50);
             		SDL_RenderPresent(r);
  				}//while(!quit)
  			}

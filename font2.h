@@ -36,4 +36,14 @@ class Text
 			SDL_DestroyTexture(mText);
 			SDL_FreeSurface(numsurface);
 		}
+		void render1(int x1,int y1,int num){
+			sprintf(numstring,"%d",num);
+			numsurface=TTF_RenderText_Solid(f,numstring,color);
+			mText=SDL_CreateTextureFromSurface(r,numsurface);
+			SDL_QueryTexture(mText,NULL,NULL,&mWidth,&mHeight);
+			NumRect.x=x1; NumRect.y=y1; NumRect.w=20; NumRect.h=20;
+			SDL_RenderCopy(r,mText,NULL,&NumRect);
+			SDL_DestroyTexture(mText);
+			SDL_FreeSurface(numsurface);
+		}
 };
