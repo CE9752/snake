@@ -5,22 +5,15 @@ using namespace std;
 class Box{
 	public:
 		int tol= 50;
-		int arz = 50;
+		float arz = 50;
 		int x_pos;
-		int y_pos;	
+		float y_pos;	
 		int jon;
 		bool show = false;
 		bool isball = false;
-		void set_jon(int Jon){
-			jon = Jon;
-		}
 		void set_position(int i_x, int j_y,float a){
 			x_pos = tol*i_x;
 			y_pos = (arz*(j_y-1))+a;
-		}
-		void is_touched()
-		{
-			jon--;
 		}
 		void block(){
 		 	boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,0,250,0,255);

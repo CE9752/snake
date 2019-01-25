@@ -8,7 +8,4 @@ class constantball{
 			filledCircleRGBA(r,i*50+25,j*50+25,10,255,0,0,255);
             circleRGBA(r,i*50+25,j*50+25,10,255,0,0,255);
 		}
-		void touch_balls(){
-			
-		}
 };
