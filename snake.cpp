@@ -193,12 +193,20 @@ int main(){
  							boxes[i][j-1].show = false;
  							for(float a = 0;a<=50;a += 0.01){
  								boxes[i][j].set_position(i,j,a);
+ 								if(i%3==0){
+ 									boxes[i][j].block1();
+ 								}
+ 								else if(i%3==1){
+ 									boxes[i][j].block2();
+ 								}
+ 								else{
  								boxes[i][j].block();
+ 								}
  								boxes[i][j-1].set_position(i,j-1,a);
  								boxes[i][j-1].hide();
  							}//for a
  							num[i][j] = num[i][j-1];								
- 							if(x[0]-10>=boxes[i][j].x_pos && x[0]+10<=boxes[i][j].x_pos+48 && 500>boxes[i][j].y_pos+50 && boxes[i][j].y_pos+50>480){
+ 							if(x[0]>=boxes[i][j].x_pos-10 && x[0]<=boxes[i][j].x_pos+58 && 500>boxes[i][j].y_pos+50 && boxes[i][j].y_pos+50>480){
                                 while(number != -1 && num[i][j] != 0){
                                     num[i][j]--;
                                     number--;

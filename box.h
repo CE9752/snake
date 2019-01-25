@@ -18,6 +18,12 @@ class Box{
 		void block(){
 		 	boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,0,250,0,255);
 		}
+		void block1(){
+		 	boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,179,255,179,255);
+		}
+		void block2(){
+		 	boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,0,128,0,255);
+		}
 		void hide(){
 			boxRGBA(r,x_pos,y_pos,x_pos+48,y_pos+50,0,0,0,255);
 		}

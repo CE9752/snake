@@ -23,7 +23,7 @@ class Ball{
 				x[i]=x[i-1];
 		}
 		void set_ball(int x[10],int i){
-			filledCircleRGBA(r,x[i],500+i*20,10,255,255,0,255);
-            circleRGBA(r,x[i],500+i*20,10,237,222,39,255);
+			filledCircleRGBA(r,x[i],500+i*20,10,255,rand()%255,0,255);
+            circleRGBA(r,x[i],500+i*20,10,237,rand()%222,39,255);
 		}
 };
